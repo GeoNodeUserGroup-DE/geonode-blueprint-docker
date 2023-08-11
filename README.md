@@ -23,7 +23,7 @@ It exposes OGC APIs such as WMS, WFS, etc.
 
 **PostgreSQL:** GeoNode and GeoServer are using [PostgreSQL](https://www.postgresql.org)  with the geospatial extension [PostGIS](https://postgis.net) as the database.
 
-## Installation
+## Setup Project
 
 Make sure you have installed `git`, `Docker` and `docker-compose`.
 
@@ -50,3 +50,50 @@ Have a look at the [Ways to set environment variables in Compose](https://docs.d
 >
 > For a complete set of available options take the [GeoNode Settings](https://docs.geonode.org/en/master/basic/settings/index.html#settings) documentation as a reference.
 
+
+## Start and Run
+
+### Docker-Compose Basics
+
+Run `docker-compose up -d` to start all geonode components.
+Review all started components by executing `docker-compose ps`. 
+You can follow logs via `docker-compose logs -f` and optionally pass a service to only follow a service's log.
+
+Stop all components via `docker-compose down`, and pass a `-v` flag to clean up all volumes (CAUTION: removes all persisted data).
+
+For more features and available commands, use `man docker-compose`, `docker-compose --help`, or read [the docker-compose CLI documentation](https://docs.docker.com/compose/reference/).
+
+### Add a Service Unit
+
+When running GeoNode on a systemd-based Linux, you may want to add a service unit:
+
+/etc/systemd/system/geonode.service
+```sh
+[Unit]
+Description=IStG GeoNode Instance
+
+[Service]
+Type=oneshot
+ExecStart=docker-compose up -d /path/to/workingcopy
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then reload the systemd daemon:
+
+```sh
+systemctl daemon-reload
+```
+
+And enable GeoNode start on each boot:
+
+```sh
+systemctl enable geonode.service
+```
+
+Check the service status:
+
+```sh
+systemctl status geonode.service
+```
