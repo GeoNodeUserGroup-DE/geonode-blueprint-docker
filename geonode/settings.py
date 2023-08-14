@@ -7,8 +7,15 @@
 
 #DEBUG = "False"
 
+
 # sets defaults settings and from .env
 from geonode.settings import *
+
+
+# Do not change!
+# Used just once to update the password
+OGC_SERVER_DEFAULT_USER = "admin"
+OGC_SERVER_DEFAULT_PASSWORD = "geoserver"
 
 
 # E-Mail Settings
