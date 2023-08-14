@@ -32,19 +32,24 @@ cd geonode
 
 ## Configuration
 
-Configuration is done in the `.env`-file and in the `geonode/settings.py` module.
-The `geonode/settings.py` modulewill be made available as [Docker volume](https://docs.docker.com/storage/volumes/#use-a-volume-with-docker-compose).
-The `env`-file exposes settings as environment variables for each container. 
+> :bulb: **Note**
+>
+> Settings (e.g. geodatabase parameters) are mainly configured in the `.env` file. 
+> To review in-built default settings of an image, run the `env` command on an image.
+> For example `docker run 52north/istg_geoserver env | sort`.
+>
+> For a complete set of available options take the [GeoNode Settings](https://docs.geonode.org/en/master/basic/settings/index.html#settings) documentation as a reference.
+
+The containers get configured during creation via environment variables. 
+The `geonode/settings.py` settings module takes further configuration of the GeoNode containers (`django` and `celery`) and aligns some names with those documented.
+
+
+Copy the `sample.env` to `.env` and make your changes (`.env` is not versioned).
+For a quick start taking default values you can run `docker-compose up -d --env-file=sample.env`.
 
 
 Have a look at the [Ways to set environment variables in Compose](https://docs.docker.com/compose/environment-variables/set-environment-variables/) documentation.
 
-> :bulb: **Note**
->
-> Shared settings (e.g. geodatabase parameters) are set in the `.env` file. 
-> To review in-built default settings of an image, you can run for example `docker run 52north/istg_geoserver env`.
->
-> For a complete set of available options take the [GeoNode Settings](https://docs.geonode.org/en/master/basic/settings/index.html#settings) documentation as a reference.
 
 
 ## Start and Run
