@@ -29,3 +29,5 @@ EMAIL_USE_SSL = "False"
 # .. or TLS
 EMAIL_USE_TLS = "False"
 DEFAULT_FROM_EMAIL = "GeoNode <no-reply@geonode.org>"
+
+INSTALLED_APPS += ( "externalapplications",)

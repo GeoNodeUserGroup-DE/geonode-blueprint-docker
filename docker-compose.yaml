@@ -7,10 +7,9 @@ x-common-django:
   restart: on-failure
   env_file:
     - .env
-  environment:
-    - DJANGO_SETTINGS_MODULE=istg_settings
   volumes:
-    - ./geonode/settings.py:/usr/src/geonode/istg_settings.py
+    - ./geonode/settings.py:/usr/src/geonode/geonode/istg_settings.py
+    - ./geonode/externalapplications/externalapplications:/usr/src/geonode/externalapplications
     - statics:/mnt/volumes/statics
     - geoserver-data-dir:/geoserver_data/data
     - backup-restore:/backup_restore
@@ -34,7 +33,7 @@ services:
       retries: 10
     environment:
       - IS_CELERY=False
-      - DJANGO_SETTINGS_MODULE=istg_settings
+      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "uwsgi --ini /usr/src/geonode/uwsgi.ini"
 
@@ -45,7 +44,7 @@ services:
       - django
     environment:
       - IS_CELERY=True
-      - DJANGO_SETTINGS_MODULE=istg_settings
+      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "celery-cmd"
 

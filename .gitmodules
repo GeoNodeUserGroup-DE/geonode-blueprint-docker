@@ -1,0 +1,3 @@
+[submodule "geonode/externalapplications"]
+	path = geonode/externalapplications
+	url = https://github.com/GeoNodeUserGroup-DE/contrib_externalapplications.git

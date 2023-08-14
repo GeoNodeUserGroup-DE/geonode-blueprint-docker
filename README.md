@@ -1,7 +1,7 @@
 # Geonode Installation
 
 This document will guide you through the installation of [GeoNode](https://geonode.org/) a spatial content management system.
-The needed components are available as [Docker](https://www.docker.com/) images and will be setup and run via the [docker-compose](https://docs.docker.com/compose/) tool.
+The needed components are available as [Docker](https://www.docker.com/) images and will be set up and run via the [docker-compose](https://docs.docker.com/compose/) tool.
 
 ## Component Overview
 
