@@ -8,8 +8,7 @@ x-common-django:
   env_file:
     - .env
   environment:
-    DJANGO_SETTINGS_MODULE: goenode.istg_settings
-    MONITORING_ENABLED: False
+    - DJANGO_SETTINGS_MODULE=geonode.istg_settings
   volumes:
     - ./geonode/settings.py:/usr/src/geonode/istg_settings.py
     - statics:/mnt/volumes/statics
