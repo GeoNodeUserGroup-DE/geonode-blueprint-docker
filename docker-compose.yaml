@@ -9,6 +9,7 @@ x-common-django:
     - .env
   volumes:
     - ./geonode/settings.py:/usr/src/geonode/geonode/istg_settings.py
+    - ./geonode/fixtures:/usr/src/geonode/geonode/fixtures
     - ./geonode/externalapplications/externalapplications:/usr/src/geonode/externalapplications
     - statics:/mnt/volumes/statics
     - geoserver-data-dir:/geoserver_data/data

@@ -1,0 +1,86 @@
+[
+    {
+        "model": "base.license",
+        "pk": 8,
+        "fields": {
+            "identifier": "CC-BY-NC-SA-4.0",
+            "name": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
+            "abbreviation": "CC BY-NC-SA 4.0",
+            "description": "You are free to: Share \u2014 copy and redistribute the material in any medium or format. Adapt \u2014 remix, transform, and build upon the material. The licensor cannot revoke these freedoms as long as you follow the license terms.",
+            "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "license_text": ""
+        }
+    },
+    {
+        "model": "base.license",
+        "pk": 9,
+        "fields": {
+            "identifier": "CC-BY-SA-4.0",
+            "name": "Creative Commons Attribution-ShareAlike 4.0 International",
+            "abbreviation": "CC BY-SA 4.0",
+            "description": "You are free to: Share \u2014 copy and redistribute the material in any medium or format. Adapt \u2014 remix, transform, and build upon the material for any purpose, even commercially. The licensor cannot revoke these freedoms as long as you follow the license terms.",
+            "url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "license_text": ""
+        }
+    },
+    {
+        "model": "base.license",
+        "pk": 10,
+        "fields": {
+            "identifier": "CC-BY-4.0",
+            "name": "Creative Commons Attribution 4.0 International",
+            "abbreviation": "CC BY 4.0",
+            "description": "You are free to: Share \u2014 copy and redistribute the material in any medium or format. Adapt \u2014 remix, transform, and build upon the material for any purpose, even commercially. The licensor cannot revoke these freedoms as long as you follow the license terms.",
+            "url": "https://creativecommons.org/licenses/by/4.0/",
+            "license_text": ""
+        }
+    },
+    {
+        "model": "base.license",
+        "pk": 11,
+        "fields": {
+            "identifier": "CC-BY-ND-4.0",
+            "name": "Creative Commons Attribution-No-Derivatives 4.0 International",
+            "abbreviation": "CC BY-ND 4.0",
+            "description": "You are free to: Share \u2014 copy and redistribute the material in any medium or format for any purpose, even commercially. The licensor cannot revoke these freedoms as long as you follow the license terms.",
+            "url": "https://creativecommons.org/licenses/by-nd/4.0/",
+            "license_text": ""
+        }
+    },
+    {
+        "model": "base.license",
+        "pk": 12,
+        "fields": {
+            "identifier": "CC-BY-NC-ND-4.0",
+            "name": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International",
+            "abbreviation": "CC BY-NC-ND 4.0",
+            "description": "You are free to: Share \u2014 copy and redistribute the material in any medium or format. The licensor cannot revoke these freedoms as long as you follow the license terms.",
+            "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+            "license_text": ""
+        }
+    },
+    {
+        "model": "base.license",
+        "pk": 13,
+        "fields": {
+            "identifier": "OGL-Canada-2.0",
+            "name": "Open Government Licence 2.0 - Canada",
+            "abbreviation": "OGL-Canada-2.0",
+            "description": "You are free to: Copy, modify, publish, translate, adapt, distribute or otherwise use the Information in any medium, mode or format for any lawful purpose.",
+            "url": "https://open.canada.ca/en/open-government-licence-canada",
+            "license_text": ""
+        }
+    },
+    {
+        "model": "base.license",
+        "pk": 14,
+        "fields": {
+            "identifier": "OGL-UK-2.0",
+            "name": "Open Government Licence v2.0",
+            "abbreviation": "OGL-UK-2.0",
+            "description": "You are free to: copy, publish, distribute and transmit the Information; adapt the Information; exploit the Information commercially and non-commercially for example, by combining it with other Information, or by including it in your own product or application.",
+            "url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/",
+            "license_text": ""
+        }
+    }
+]
