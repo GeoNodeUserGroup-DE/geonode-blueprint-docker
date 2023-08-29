@@ -1,0 +1,7 @@
+{
+    "externalapplications": {
+        "bundle": "externalapplications/index.js",
+        "translations": "externalapplications/translations",
+        "assets": "externalapplications/assets"
+    }
+}

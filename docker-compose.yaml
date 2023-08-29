@@ -8,9 +8,10 @@ x-common-django:
   env_file:
     - .env
   volumes:
-    - ./geonode/settings.py:/usr/src/geonode/geonode/istg_settings.py
     - ./geonode/fixtures:/usr/src/geonode/geonode/fixtures
+    - ./geonode/settings.py:/usr/src/geonode/geonode/settings_override.py
     - ./geonode/externalapplications/externalapplications:/usr/src/geonode/externalapplications
+    - ./geonode/static/mapstore/extensions/index.json:/usr/src/geonode/geonode/static/mapstore/extensions/index.json
     - statics:/mnt/volumes/statics
     - geoserver-data-dir:/geoserver_data/data
     - backup-restore:/backup_restore
@@ -34,8 +35,11 @@ services:
       retries: 10
     environment:
       - IS_CELERY=False
-      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
+      - DJANGO_SETTINGS_MODULE=geonode.settings_override
+      - STATIC_ROOT = "/mnt/volumes/statics/static/"
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
+    ports:
+      - "8001:8001"
     command: "uwsgi --ini /usr/src/geonode/uwsgi.ini"
 
   celery:
@@ -45,7 +49,8 @@ services:
       - django
     environment:
       - IS_CELERY=True
-      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
+      - DJANGO_SETTINGS_MODULE=geonode.settings_override
+      - STATIC_ROOT = "/mnt/volumes/statics/static/"
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "celery-cmd"
 

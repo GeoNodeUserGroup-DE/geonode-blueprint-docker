@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  django:
+    volumes:
+    - ./geonode/static/mapstore/extensions/index_dev.json:/usr/src/geonode/geonode/static/mapstore/extensions/index.json
+    ports:
+      - "8001:8001"
+
+  db:
+    ports:
+      - "5432:5432"
+
+    
