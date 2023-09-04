@@ -16,6 +16,8 @@ x-common-django:
     - backup-restore:/backup_restore
     - data:/data
     - tmp:/tmp
+  environment:
+    - DJANGO_SETTINGS_MODULE=geonode.istg_settings
   depends_on:
     db:
       condition: service_healthy
@@ -34,7 +36,6 @@ services:
       retries: 10
     environment:
       - IS_CELERY=False
-      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "uwsgi --ini /usr/src/geonode/uwsgi.ini"
 
@@ -45,7 +46,6 @@ services:
       - django
     environment:
       - IS_CELERY=True
-      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "celery-cmd"
 
