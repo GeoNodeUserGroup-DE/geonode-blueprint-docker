@@ -1,7 +1,7 @@
 # Geonode Installation
 
-This document will guide you through the installation of [GeoNode](https://geonode.org/) a spatial content management system.
-The needed components are available as [Docker](https://www.docker.com/) images and will be set up and run via the [docker-compose](https://docs.docker.com/compose/) tool.
+This document will guide you through the installation of [GeoNode](https://geonode.org/), a spatial content management system.
+The needed components are available as [Docker](https://www.docker.com/) images and will be set up and run via the [docker compose](https://docs.docker.com/compose/) tool.
 
 ## Component Overview
 
@@ -21,7 +21,7 @@ It exposes OGC APIs such as WMS, WFS, etc.
 
 ## Setup Project
 
-Make sure you have installed `git`, `Docker` and `docker-compose`.
+Make sure you have installed `git`, `Docker` and `docker compose`.
 
 Clone the [istg_geonode repository]( https://github.com/52North/istg_geonode) and change directory your local working copy:
 
@@ -45,7 +45,7 @@ The `geonode/settings.py` settings module takes further configuration of the Geo
 
 
 Copy the `sample.env` to `.env` and make your changes (`.env` is not versioned).
-For a quick start taking default values you can run `docker-compose up -d --env-file=sample.env`.
+For a quick start taking default values you can run `docker compose up -d --env-file=sample.env`.
 
 
 Have a look at the [Ways to set environment variables in Compose](https://docs.docker.com/compose/environment-variables/set-environment-variables/) documentation.
@@ -56,13 +56,13 @@ Have a look at the [Ways to set environment variables in Compose](https://docs.d
 
 ### Docker-Compose Basics
 
-Run `docker-compose up -d` to start all geonode components.
-Review all started components by executing `docker-compose ps`. 
-You can follow logs via `docker-compose logs -f` and optionally pass a service to only follow a service's log.
+Run `docker compose up -d` to start all geonode components.
+Review all started components by executing `docker compose ps`. 
+You can follow logs via `docker compose logs -f` and optionally pass a service to only follow a service's log.
 
-Stop all components via `docker-compose down`, and pass a `-v` flag to clean up all volumes (CAUTION: removes all persisted data).
+Stop all components via `docker compose down`, and pass a `-v` flag to clean up all volumes (CAUTION: removes all persisted data).
 
-For more features and available commands, use `man docker-compose`, `docker-compose --help`, or read [the docker-compose CLI documentation](https://docs.docker.com/compose/reference/).
+For more features and available commands, `docker compose --help`, or read [the docker compose CLI documentation](https://docs.docker.com/compose/reference/).
 
 ### Add a Service Unit
 
@@ -75,7 +75,7 @@ Description=IStG GeoNode Instance
 
 [Service]
 Type=oneshot
-ExecStart=docker-compose up -d /path/to/workingcopy
+ExecStart=docker compose up -d /path/to/workingcopy
 
 [Install]
 WantedBy=multi-user.target
