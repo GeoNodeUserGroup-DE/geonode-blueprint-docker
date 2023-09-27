@@ -51,6 +51,20 @@ For a quick start taking default values you can run `docker compose up -d --env-
 Have a look at the [Ways to set environment variables in Compose](https://docs.docker.com/compose/environment-variables/set-environment-variables/) documentation.
 
 
+### TLS Config
+
+If you want to configure a TLS certificate, you can mount key and cert as `pem`s in the `geonode` service within the `docker-compose.yml` file.
+Uncomment the corresponding lines:
+
+ ```sh
+ volumes:
+    - nginx-confd:/etc/nginx
+    - statics:/mnt/volumes/statics
+    # Link to a custom certificate here
+    #- <path-to-cert>.pem:/geonode-certificates/autoissued/fullchain.pem
+    #- <path-to-key>.pem:/geonode-certificates/autoissued/privkey.pem
+ ```
+
 
 ## Start and Run
 

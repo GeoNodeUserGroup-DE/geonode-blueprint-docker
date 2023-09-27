@@ -3,7 +3,7 @@ version: '3.9'
 # Common Django template for GeoNode and Celery services below
 x-common-django:
   &default-common-django
-  image: 52north/geonode:4.1.x
+  image: 52north/geonode:4.1.3
   restart: on-failure
   env_file:
     - .env
@@ -16,8 +16,6 @@ x-common-django:
     - backup-restore:/backup_restore
     - data:/data
     - tmp:/tmp
-  environment:
-    - DJANGO_SETTINGS_MODULE=geonode.istg_settings
   depends_on:
     db:
       condition: service_healthy
@@ -36,6 +34,7 @@ services:
       retries: 10
     environment:
       - IS_CELERY=False
+      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "uwsgi --ini /usr/src/geonode/uwsgi.ini"
 
@@ -46,11 +45,16 @@ services:
       - django
     environment:
       - IS_CELERY=True
+      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "celery-cmd"
 
   geonode:
-    image: 52north/geonode-nginx:4.1.x
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+      args:
+        - BASE_IMAGE_VERSION=4.1.3
     container_name: nginx4${COMPOSE_PROJECT_NAME}
     environment:
       - HTTPS_HOST=${GEONODE_LB_HOST_IP}
@@ -63,10 +67,13 @@ services:
     volumes:
       - nginx-confd:/etc/nginx
       - statics:/mnt/volumes/statics
+      # Link to a custom certificate here
+      #- <path-to-cert>.pem:/geonode-certificates/autoissued/fullchain.pem
+      #- <path-to-key>.pem:/geonode-certificates/autoissued/privkey.pem
     restart: on-failure
 
   geoserver:
-    image: 52north/geonode-geoserver:4.1.x
+    image: 52north/geonode-geoserver:4.1.3
     container_name: geoserver4${COMPOSE_PROJECT_NAME}
     healthcheck:
       test: "curl --fail --silent --write-out 'HTTP CODE : %{http_code}\n' --output /dev/null http://127.0.0.1:8080/geoserver/ows"
