@@ -26,7 +26,7 @@ Make sure you have installed `git`, `Docker` and `docker compose`.
 Clone the [istg_geonode repository]( https://github.com/52North/istg_geonode) and change directory your local working copy:
 
 ```
-git clone https://github.com/52North/istg_geonode geonode
+git clone --recurse-submodules https://github.com/52North/istg_geonode geonode
 cd geonode
 ```
 
