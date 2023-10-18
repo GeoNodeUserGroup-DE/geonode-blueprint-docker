@@ -65,7 +65,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - nginx-confd:/etc/nginx
       - statics:/mnt/volumes/statics
       # Link to a custom certificate here
       #- <path-to-cert>.pem:/geonode-certificates/autoissued/fullchain.pem
@@ -129,8 +128,6 @@ services:
 volumes:
   statics:
     name: ${COMPOSE_PROJECT_NAME}-statics
-  nginx-confd:
-    name: ${COMPOSE_PROJECT_NAME}-nginxconfd
   geoserver-data-dir:
     name: ${COMPOSE_PROJECT_NAME}-gsdatadir
   dbdata:
