@@ -23,10 +23,10 @@ It exposes OGC APIs such as WMS, WFS, etc.
 
 Make sure you have installed `git`, `Docker` and `docker compose`.
 
-Clone the [istg_geonode repository]( https://github.com/52North/istg_geonode) and change directory your local working copy:
+Clone the [repository containing a GeoNode Docker setup]( https://github.com/52North/geonode_docker_setup) and change directory your local working copy:
 
 ```
-git clone --recurse-submodules https://github.com/52North/istg_geonode geonode
+git clone --recurse-submodules https://github.com/52North/geonode_docker_setup geonode
 cd geonode
 ```
 
@@ -36,7 +36,7 @@ cd geonode
 >
 > Settings (e.g. geodatabase parameters) are mainly configured in the `.env` file. 
 > To review in-built default settings of an image, run the `env` command on an image.
-> For example `docker run 52north/istg_geoserver env | sort`.
+> For example `docker run 52north/geonode-geoserver env | sort`.
 >
 > For a complete set of available options take the [GeoNode Settings](https://docs.geonode.org/en/master/basic/settings/index.html#settings) documentation as a reference.
 
@@ -85,7 +85,7 @@ When running GeoNode on a systemd-based Linux, you may want to add a service uni
 /etc/systemd/system/geonode.service
 ```sh
 [Unit]
-Description=IStG GeoNode Instance
+Description=GeoNode Docker Installation
 
 [Service]
 Type=oneshot

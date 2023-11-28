@@ -8,7 +8,7 @@ x-common-django:
   env_file:
     - .env
   volumes:
-    - ./geonode/settings.py:/usr/src/geonode/geonode/istg_settings.py
+    - ./geonode/settings.py:/usr/src/geonode/geonode/settings_override.py
     - ./geonode/fixtures:/usr/src/geonode/geonode/fixtures
     - ./geonode/externalapplications/externalapplications:/usr/src/geonode/externalapplications
     - statics:/mnt/volumes/statics
@@ -34,7 +34,7 @@ services:
       retries: 10
     environment:
       - IS_CELERY=False
-      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
+      - DJANGO_SETTINGS_MODULE=geonode.settings_override
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "uwsgi --ini /usr/src/geonode/uwsgi.ini"
 
@@ -45,7 +45,7 @@ services:
       - django
     environment:
       - IS_CELERY=True
-      - DJANGO_SETTINGS_MODULE=geonode.istg_settings
+      - DJANGO_SETTINGS_MODULE=geonode.settings_override
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "celery-cmd"
 
