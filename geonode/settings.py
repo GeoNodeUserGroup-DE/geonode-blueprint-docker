@@ -10,6 +10,7 @@
 
 # sets defaults settings and from .env
 from geonode.settings import *
+from geonode.settings import INSTALLED_APPS
 
 
 # Do not change!
@@ -30,4 +31,4 @@ EMAIL_USE_SSL = "False"
 EMAIL_USE_TLS = "False"
 DEFAULT_FROM_EMAIL = "GeoNode <no-reply@geonode.org>"
 
-INSTALLED_APPS += ( "externalapplications",)
+INSTALLED_APPS += ("externalapplications",)
