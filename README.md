@@ -23,10 +23,10 @@ It exposes OGC APIs such as WMS, WFS, etc.
 
 Make sure you have installed `git`, `Docker` and `docker compose`.
 
-Clone the [repository containing a GeoNode Docker setup]( https://github.com/52North/geonode-blueprint-docker) and change directory your local working copy:
+Clone the [repository containing a GeoNode Docker setup]( https://github.com/GeoNodeUserGroup-DE/geonode-blueprint-docker) and change directory your local working copy:
 
 ```
-git clone --recurse-submodules https://github.com/52North/geonode-blueprint-docker geonode
+git clone --recurse-submodules https://github.com/GeoNodeUserGroup-DE/geonode-blueprint-docker geonode
 cd geonode
 ```
 
