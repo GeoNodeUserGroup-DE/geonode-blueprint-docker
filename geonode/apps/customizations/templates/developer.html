@@ -1,0 +1,15 @@
+{% extends "geonode_base.html" %}
+
+{% load i18n %}
+{% block title %} {% trans "Information for Developers" %} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+<div class="page-header">
+  <h2>{% trans "Information for Developers" %}</h2>
+</div>
+
+{% blocktrans %}
+Developer Info here
+{% endblocktrans %}
+
+{% endblock %}

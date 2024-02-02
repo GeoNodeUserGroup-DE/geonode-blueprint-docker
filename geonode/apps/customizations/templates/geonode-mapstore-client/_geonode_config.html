@@ -1,0 +1,235 @@
+{% extends 'geonode-mapstore-client/_geonode_config.html' %}
+{% block override_local_config %}
+<script>
+    (function() {
+
+        // Overriding or patching a component's cfg takes place in the context_processor.
+        // In case a component provides cfg as default JS parameters, overriding such cfg
+        // is not possible from the outside.
+        // Some cfg of the ResourcesGrid component is set as default JS parameters, so we 
+        // have to set that config here to make it overridable via override_local_config.
+        
+        const resourceGridPluginMenuItems = [
+            {
+                labelId: 'gnhome.addResource',
+                disableIf: "{(state('settings') && state('settings').isMobile) || !(state('user') && state('user').perms && state('user').perms.includes('add_resource')) ? true : false}",
+                type: 'dropdown',
+                variant: 'primary',
+                responsive: true,
+                items: [
+                    {
+                        labelId: 'gnhome.uploadDataset',
+                        value: 'layer',
+                        type: 'link',
+                        href: '/catalogue/#/upload/dataset'
+                    },
+                    {
+                        labelId: 'gnhome.uploadDocument',
+                        value: 'document',
+                        type: 'link',
+                        href: '/catalogue/#/upload/document'
+                    },
+                    {
+                        labelId: 'gnhome.createDataset',
+                        value: 'layer',
+                        type: 'link',
+                        href: '/createlayer/',
+                        disableIf: "{(state('settings') && state('settings').createLayer) ? false : true}"
+                    },
+                    {
+                        labelId: 'gnhome.createMap',
+                        value: 'map',
+                        type: 'link',
+                        href: '/catalogue/#/map/new'
+                    },
+                    {
+                        labelId: 'gnhome.createGeostory',
+                        value: 'geostory',
+                        type: 'link',
+                        href: '/catalogue/#/geostory/new'
+                    },
+                    {
+                        labelId: 'gnhome.createDashboard',
+                        value: 'dashboard',
+                        type: 'link',
+                        href: '/catalogue/#/dashboard/new'
+                    },
+                    {
+                        labelId: 'gnhome.remoteServices',
+                        value: 'remote',
+                        type: 'link',
+                        href: '/services/?limit=5'
+                    }
+                ]
+            },
+            {
+                type: 'divider'
+            }
+        ]
+
+        const resourcesGridPluginFiltersFormItems = [
+            {
+                type: 'group',
+                labelId: 'gnhome.customFiltersTitle',
+                items: [
+                    {
+                        id: 'my-resources',
+                        labelId: 'gnhome.myResources',
+                        type: 'filter',
+                        disableIf: '{!state("user")}'
+                    },
+                    {
+                        id: 'favorite',
+                        labelId: 'gnhome.favorites',
+                        type: 'filter',
+                        disableIf: '{!state("user")}'
+                    },
+                    {
+                        id: 'featured',
+                        labelId: 'gnhome.featuredList',
+                        type: 'filter'
+                    },
+                    {
+                        id: 'unpublished',
+                        labelId: 'gnhome.unpublished',
+                        type: 'filter',
+                        disableIf: '{!state("user")}'
+                    },
+                    {
+                        id: 'pending-approval',
+                        labelId: 'gnhome.pendingApproval',
+                        type: 'filter',
+                        disableIf: '{!state("user")}'
+                    },
+                    {
+                        id: 'dataset',
+                        labelId: 'gnhome.datasets',
+                        type: 'filter',
+                        items: [
+                            {
+                                id: 'store-vector',
+                                labelId: 'gnhome.vector',
+                                type: 'filter'
+                            },
+                            {
+                                id: 'store-raster',
+                                labelId: 'gnhome.raster',
+                                type: 'filter'
+                            },
+                            {
+                                id: 'store-remote',
+                                labelId: 'gnhome.remote',
+                                type: 'filter'
+                            },
+                            {
+                                id: 'store-time-series',
+                                labelId: 'gnhome.timeSeries',
+                                type: 'filter'
+                            }
+                        ]
+                    },
+                    {
+                        id: 'document',
+                        labelId: 'gnhome.documents',
+                        type: 'filter'
+                    },
+                    {
+                        id: 'map',
+                        labelId: 'gnhome.maps',
+                        type: 'filter'
+                    },
+                    {
+                        id: 'geostory',
+                        labelId: 'gnhome.geostories',
+                        type: 'filter'
+                    },
+                    {
+                        id: 'dashboard',
+                        labelId: 'gnhome.dashboards',
+                        type: 'filter'
+                    }
+                ]
+            },
+            {
+                type: 'divider',
+                disableIf: '{!state("user")}'
+            },
+            {
+                labelId: 'gnhome.categories',
+                placeholderId: 'gnhome.categoriesPlaceholder',
+                type: 'select',
+                suggestionsRequestKey: 'categories'
+            },
+            {
+                labelId: 'gnhome.keywords',
+                placeholderId: 'gnhome.keywordsPlaceholder',
+                type: 'select',
+                suggestionsRequestKey: 'keywords'
+            },
+            {
+                labelId: 'gnhome.regions',
+                placeholderId: 'gnhome.regionsPlaceholder',
+                type: 'select',
+                suggestionsRequestKey: 'regions'
+            },
+            {
+                labelId: 'gnhome.owners',
+                placeholderId: 'gnhome.ownersPlaceholder',
+                type: 'select',
+                suggestionsRequestKey: 'owners'
+            }
+        ];
+
+        const { overrideLocalConfig } = window.__GEONODE_CONFIG__;
+        window.__GEONODE_CONFIG__.overrideLocalConfig = function(localConfig, _) {
+            if (overrideLocalConfig) {
+                overrideLocalConfig(localConfig, _)
+            }
+
+            var pluginPageName = "catalogue";
+            var selectedPluginName = "ResourcesGrid";
+
+            for (var i = 0; i < localConfig.plugins[pluginPageName].length; i++) {
+                var currentPlugin = localConfig.plugins[pluginPageName][i];
+                var isSelectedPlugin = currentPlugin.name === selectedPluginName;
+                if (isSelectedPlugin) {
+                    // apply configuration to the plugin
+                    const plugin = localConfig.plugins[pluginPageName][i]
+
+                    const filtersFormItems = resourcesGridPluginFiltersFormItems
+                    filtersFormItems[0].items.push({
+                        id: "externalapplication",
+                        labelId: "externalapplications.filter",
+                        type: "filter"
+                    });
+                    localConfig.geoNodeCustomFilters = Object.assign(localConfig.geoNodeCustomFilters, {
+                        "externalapplication": {
+                            "filter{resource_type.in}": "externalapplication"
+                        }
+                    });
+                    plugin.cfg.filtersFormItems = filtersFormItems
+
+
+                    const menuItems = resourceGridPluginMenuItems
+                    menuItems[0].items.push({
+                        labelId: "externalapplications.register",
+                        value: "externalapplication",
+                        type: "link",
+                        href: "/externalapplications/create",
+                        authenticated: true,
+                        perms: [
+                            {
+                                "type": "user",
+                                "value": "add_resource"
+                            }
+                        ]
+                    });
+                    plugin.cfg.menuItems = menuItems;
+                }
+            }
+
+            return localConfig;
+        };
+    })();
+</script>
+{% endblock %}

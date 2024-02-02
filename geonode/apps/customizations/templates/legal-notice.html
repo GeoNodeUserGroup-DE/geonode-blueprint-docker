@@ -1,0 +1,15 @@
+{% extends "geonode_base.html" %}
+
+{% load i18n %}
+{% block title %} {% trans "Legal notice" %} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+<div class="page-header">
+    <h2>{% trans "Legal notice" %}</h2>
+</div>
+
+{% blocktrans %}
+Legel Notice here
+{% endblocktrans %}
+
+{% endblock %}
