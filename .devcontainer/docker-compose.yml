@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+  django:
+    env_file:
+      - .devcontainer/.env.local
+    restart: "no"
+    volumes:
+      #- ./.devcontainer/docker/geonode/custom_entrypoint.sh:/usr/src/geonode/custom_entrypoint.sh
+      - ./.devcontainer/_gitignore:/usr/src/geonode/.gitignore
+      - ./.devcontainer/_vscode:/usr/src/geonode/.vscode
+    ports:
+      - "8001:8001"
+    #command: /usr/src/geonode/custom_entrypoint.sh
+    command: sleep infinity
+
+  celery:
+    env_file:
+      - .devcontainer/.env.local
+    restart: "no"
+    depends_on:
+      - django
+    # volumes:
+    #   - './src:/usr/src/geonode'
+
+  geonode:
+    env_file:
+      - .devcontainer/.env.local
+    environment:
+      - HTTPS_HOST=
+
+  geoserver:
+    env_file:
+      - .devcontainer/.env.local
+    build:
+      context: ./.devcontainer/docker/geoserver
+      dockerfile: Dockerfile
+      args:
+        - BASE_IMAGE_VERSION=${GEONODE_VERSION}
+    environment:
+      - OAUTH2_CLIENT_ID=${OAUTH2_CLIENT_ID}
+      - OAUTH2_CLIENT_SECRET=${OAUTH2_CLIENT_SECRET}
+    ports:
+      - "8080:8080"
+
+  db:
+    build:
+      context: ./.devcontainer/docker/postgresql
+      dockerfile: Dockerfile
+      args:
+        - BASE_IMAGE_VERSION=${GEONODE_VERSION}
+    ports:
+     - "5432:5432"

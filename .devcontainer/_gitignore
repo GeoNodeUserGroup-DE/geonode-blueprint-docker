@@ -1,0 +1,111 @@
+# build artifacts
+*.pyc
+*.egg-info
+build
+target
+pip-log.txt
+MANIFEST
+dist
+.idea/
+.vscode/
+.pytest_cache/
+pip-wheel-metadata/
+# supporting stuff pulled in by paver script
+geonode/development.db
+/geoserver/
+downloaded
+package-lock.json
+GeoIPCities.dat
+
+docs/i18n/pot/
+
+# Static media handling
+*.jshintrc
+geonode/static/.components/
+geonode/static_root/
+node_modules
+# Listing all of them instead of putting geonode/static/lib out of version control.
+geonode/local_settings.py
+
+# Uploaded files
+geonode/uploaded
+
+#Testing output
+.coverage
+.noseids
+.cache
+geonode_test_data/
+nosetests.xml
+geonode/static/geonode/junit.xml
+
+#Temporary files
+*~
+*.swp
+celerybeat-schedule.*
+*.log
+
+# OSX specific
+.Python
+.DS_Store
+
+# Docs
+docs/_build
+
+# ec2.py
+scripts/cloud/.gnec2.cfg
+uploaded
+development.db
+master
+slave
+
+# virtual env
+venv
+geonode/bin/
+geonode/djcelery/
+geonode/include/
+geonode/lib/
+geonode/local/
+geonode/man/
+geonode/pip-selfcheck.json
+geonode/shapely/
+geonode/share/
+
+# celery files
+celerybeat-schedule.*
+
+geonode\.tests\.bdd\.e2e\.test_login/
+
+*.log
+
+/celerybeat.pid
+/celerybeat-schedule
+
+scripts/spcgeonode/_volume_*
+
+/geonode/test_settings.py
+
+/geonode/static/yarn.lock
+
+/geonode/development.db-journal
+
+/output.bin
+
+/worker.state
+
+# Docker Hub hooks
+!hooks/*
+
+
+
+## Add mounted files and directories
+
+
+# Mounted contrib apps
+externalapplications/
+customizations/
+
+# Mounted config
+fixtures/
+geonode/settings_override.py
+more_requirements.txt
+
