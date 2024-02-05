@@ -52,7 +52,7 @@ LOGGING = {
     "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
     "handlers": {
         "console": {
-            "level": "DEBUG",
+            "level": "WARNING",
             "class": "logging.StreamHandler",
             "stream": sys.stdout,
             "formatter": "simple",
@@ -71,10 +71,6 @@ LOGGING = {
         "django": {
             "handlers": ["console"],
             "level": "INFO",
-        },
-        "django.security.csrf": {
-            "handlers": ["console"],
-            "level": "DEBUG",
         },
         "geonode": {
             "handlers": ["console"],
