@@ -4,17 +4,19 @@
 # https://docs.geonode.org/en/master/basic/settings/index.html#settings
 #
 
+import os
+import sys
 
-#DEBUG = "False"
 
+# DEBUG = "False"
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # sets defaults settings and from .env
 from geonode.settings import *
 from geonode.settings import TEMPLATES, INSTALLED_APPS
 
 
-SITENAME = os.getenv("SITENAME", "geonode")
-X_FRAME_OPTIONS = "SAMEORIGIN"
 STATIC_ROOT = "/mnt/volumes/statics/static/"
 MEDIA_ROOT = "/mnt/volumes/statics/uploaded/"
 
@@ -36,21 +38,23 @@ TEMPLATES[0].pop("APP_DIRS", None)
 
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": True,
+    "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s %(process)d "
-            "%(thread)d %(message)s"
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
         },
         "simple": {
-            "format": "%(message)s",
+            "format": "{levelname} {message}",
+            "style": "{",
         },
     },
     "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
     "handlers": {
         "console": {
-            "level": "ERROR",
+            "level": "DEBUG",
             "class": "logging.StreamHandler",
+            "stream": sys.stdout,
             "formatter": "simple",
         },
         "mail_admins": {
@@ -60,9 +64,17 @@ LOGGING = {
         },
     },
     "loggers": {
+        "root": {
+            "handlers": ["console"],
+            "level": "WARNING",
+        },
         "django": {
             "handlers": ["console"],
-            "level": "ERROR",
+            "level": "INFO",
+        },
+        "django.security.csrf": {
+            "handlers": ["console"],
+            "level": "DEBUG",
         },
         "geonode": {
             "handlers": ["console"],
@@ -82,15 +94,15 @@ LOGGING = {
         },
         "celery": {
             "handlers": ["console"],
-            "level": "DEBUG",
+            "level": "INFO",
         },
         "mapstore2_adapter.plugins.serializers": {
             "handlers": ["console"],
-            "level": "DEBUG",
+            "level": "INFO",
         },
         "geonode_logstash.logstash": {
             "handlers": ["console"],
-            "level": "DEBUG",
+            "level": "INFO",
         },
     },
 }
