@@ -86,7 +86,10 @@ services:
       - "8001:443"
     volumes:
       - statics:/mnt/volumes/statics
-    restart: on-failure
+      # Link to a custom certificate here
+      #- <path-to-cert>.pem:/geonode-certificates/autoissued/fullchain.pem
+      #- <path-to-key>.pem:/geonode-certificates/autoissued/privkey.pem
+    restart: always
 
   # Geoserver backend
   geoserver:
