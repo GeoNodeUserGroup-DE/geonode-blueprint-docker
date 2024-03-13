@@ -15,6 +15,7 @@ x-common-django:
     - .env
   volumes:
     # configuration
+    - ./favicon.ico:/srv/docker/volumes/geonode_plastops-statics/_data/static/geonode/img/facicon.ico
     - ./geonode/geonode/settings_override.py:/usr/src/geonode/geonode/settings_override.py
     - ./geonode/uwsgi.ini:/usr/src/geonode/uwsgi.ini
     - ./geonode/fixtures:/usr/src/geonode/fixtures
