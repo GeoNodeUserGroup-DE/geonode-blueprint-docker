@@ -25,6 +25,8 @@ services:
       - .devcontainer/.env.local
     environment:
       - HTTPS_HOST=
+    ports:
+      - "80:80"
 
   geoserver:
     env_file:
