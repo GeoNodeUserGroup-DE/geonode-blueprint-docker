@@ -8,7 +8,6 @@ services:
       - ./.devcontainer/_vscode:/usr/src/geonode/.vscode
     ports:
       - "8001:8001"
-    #command: /usr/src/geonode/custom_entrypoint.sh
     command: sleep infinity
 
   celery:
@@ -17,8 +16,6 @@ services:
     restart: "no"
     depends_on:
       - django
-    # volumes:
-    #   - './src:/usr/src/geonode'
 
   geonode:
     env_file:
