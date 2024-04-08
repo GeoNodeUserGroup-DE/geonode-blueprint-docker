@@ -7,6 +7,9 @@ ssl_session_timeout 5m;
 
 # this is the actual HTTPS host
 server {
+    allow               10.149.0.0/16;
+    deny                all;
+
     listen              443 ssl;
     server_name         $HTTPS_HOST;
     server_tokens off;
