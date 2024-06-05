@@ -1,4 +1,5 @@
 services:
+
   django:
     env_file:
       - .devcontainer/.env.local
