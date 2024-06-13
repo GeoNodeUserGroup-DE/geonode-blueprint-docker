@@ -1,2 +1,2 @@
 ARG BASE_IMAGE_VERSION
-FROM 52north/geonode-postgis:${BASE_IMAGE_VERSION}
+FROM geonode/postgis:${BASE_IMAGE_VERSION}
