@@ -17,6 +17,8 @@ from geonode.settings import (  # noqa
     INSTALLED_APPS,
 )
 
+SITE_HOST_NAME = "PlasticObs+"
+
 X_FRAME_OPTIONS = "SAMEORIGIN"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None if DEBUG else "same-origin"
 
@@ -124,6 +126,6 @@ LOGGING = {
 
 
 INSTALLED_APPS += (
-    "externalapplications",
+    # "externalapplications",
     "customizations",
 )
