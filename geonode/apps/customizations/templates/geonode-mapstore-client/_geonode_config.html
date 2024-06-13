@@ -21,13 +21,13 @@
                         labelId: 'gnhome.uploadDataset',
                         value: 'layer',
                         type: 'link',
-                        href: '/catalogue/#/upload/dataset'
+                        href: '{context.getCataloguePath("/catalogue/#/upload/dataset")}'
                     },
                     {
                         labelId: 'gnhome.uploadDocument',
                         value: 'document',
                         type: 'link',
-                        href: '/catalogue/#/upload/document'
+                        href: '{context.getCataloguePath("/catalogue/#/upload/document")}'
                     },
                     {
                         labelId: 'gnhome.createDataset',
@@ -40,19 +40,19 @@
                         labelId: 'gnhome.createMap',
                         value: 'map',
                         type: 'link',
-                        href: '/catalogue/#/map/new'
+                        href: '{context.getCataloguePath("/catalogue/#/map/new")}'
                     },
                     {
                         labelId: 'gnhome.createGeostory',
                         value: 'geostory',
                         type: 'link',
-                        href: '/catalogue/#/geostory/new'
+                        href: '{context.getCataloguePath("/catalogue/#/geostory/new")}'
                     },
                     {
                         labelId: 'gnhome.createDashboard',
                         value: 'dashboard',
                         type: 'link',
-                        href: '/catalogue/#/dashboard/new'
+                        href: '{context.getCataloguePath("/catalogue/#/dashboard/new")}'
                     },
                     {
                         labelId: 'gnhome.remoteServices',
@@ -68,6 +68,9 @@
         ]
 
         const resourcesGridPluginFiltersFormItems = [
+            {
+                type: 'search'
+            },
             {
                 type: 'group',
                 labelId: 'gnhome.customFiltersTitle',
@@ -139,6 +142,11 @@
                         type: 'filter'
                     },
                     {
+                        id: 'mapviewer',
+                        labelId: 'gnhome.mapviewers',
+                        type: 'filter'
+                    },
+                    {
                         id: 'geostory',
                         labelId: 'gnhome.geostories',
                         type: 'filter'
@@ -155,28 +163,38 @@
                 disableIf: '{!state("user")}'
             },
             {
-                labelId: 'gnhome.categories',
-                placeholderId: 'gnhome.categoriesPlaceholder',
                 type: 'select',
-                suggestionsRequestKey: 'categories'
+                facet: "category"
             },
             {
-                labelId: 'gnhome.keywords',
-                placeholderId: 'gnhome.keywordsPlaceholder',
                 type: 'select',
-                suggestionsRequestKey: 'keywords'
+                facet: "keyword"
             },
             {
-                labelId: 'gnhome.regions',
-                placeholderId: 'gnhome.regionsPlaceholder',
                 type: 'select',
-                suggestionsRequestKey: 'regions'
+                facet: 'place'
             },
             {
-                labelId: 'gnhome.owners',
-                placeholderId: 'gnhome.ownersPlaceholder',
                 type: 'select',
-                suggestionsRequestKey: 'owners'
+                facet: 'user'
+            },
+            {
+                type: 'select',
+                facet: "group"
+            },
+            {
+                type: "accordion",
+                style: "facet", // style can be facet or filter (checkbox)
+                facet: "thesaurus"
+            },
+            {
+                type: 'date-range',
+                filterKey: 'date',
+                labelId: 'gnviewer.dateFilter'
+            },
+            {
+                labelId: 'gnviewer.extent',
+                type: 'extent'
             }
         ];
 
@@ -197,7 +215,7 @@
                     const plugin = localConfig.plugins[pluginPageName][i]
 
                     const filtersFormItems = resourcesGridPluginFiltersFormItems
-                    filtersFormItems[0].items.push({
+                    filtersFormItems[1].items.push({
                         id: "externalapplication",
                         labelId: "externalapplications.filter",
                         type: "filter"
