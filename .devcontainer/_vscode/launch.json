@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "Python: Django",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "./manage.py",
       "args": [
@@ -15,7 +15,7 @@
     },
     {
       "name": "Python: Celery",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "/usr/local/bin/celery",
       "args": [
@@ -39,7 +39,7 @@
     },
     {
       "name": "Django Test",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/manage.py",
       "args": [
