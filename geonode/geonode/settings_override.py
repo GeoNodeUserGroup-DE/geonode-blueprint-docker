@@ -126,5 +126,6 @@ LOGGING = {
 
 
 INSTALLED_APPS += (
+    "litterassessment",
     "customizations",
 )

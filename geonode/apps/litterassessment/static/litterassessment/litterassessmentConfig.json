@@ -1,0 +1,84 @@
+{
+  "models": {
+    "litterassessment": {
+      "jsonSchema": {
+        "title": "Input Data",
+        "type": "object",
+        "required": [],
+        "properties": {
+          "imageUrl": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string",
+            "default": "PLD",
+            "enum": ["PLD", "PanOptic_Segmentation"]
+          },
+          "generate_plot": {
+            "in": "query",
+            "type": "boolean",
+            "title": "Generate plot",
+            "description": "Whether the plot should be provided.",
+            "default": true
+          },
+          "output_type": {
+            "type": "string",
+            "default": "Download",
+            "enum": ["Download", "Response"]
+          }
+        }
+      },
+      "uiSchema": {
+        "imageUrl": {
+          "ui:widget": "hidden"
+        },
+        "model": {
+          "ui:widget": "select"
+        },
+        "output_type": {
+          "ui:enumDisable": ["Response"]
+        },
+        "generate_plot": {
+          "ui:widget": "radio"
+        }
+      }
+    },
+    "old-litterassessment": {
+      "jsonSchema": {
+        "title": "Input Data 2",
+        "type": "object",
+        "required": [],
+        "properties": {
+          "input": {
+            "type": "string"
+          },
+          "PLD": {
+            "in": "query",
+            "type": "boolean",
+            "title": "PLD plot",
+            "description": "Whether a detection plot should be provided.",
+            "default": true
+          },
+          "PLQ": {
+            "in": "query",
+            "type": "boolean",
+            "title": "PLD plot",
+            "description": "Whether a quantification plot should be provided.",
+            "default": true
+          }
+        }
+      },
+      "uiSchema": {
+        "input": {
+          "ui:widget": "hidden"
+        },
+        "PLD": {
+          "ui:widget": "select"
+        },
+        "PLQ": {
+          "ui:widget": "select"
+        }
+      }
+    }
+  }
+}
