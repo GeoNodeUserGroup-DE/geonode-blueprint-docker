@@ -1,4 +1,3 @@
-
 import json
 import logging
 
@@ -31,23 +30,26 @@ def forward_request(request):
         except Exception as e:
             logger.debug("Invalid JSON payload!", e)
             return HttpResponseBadRequest()
-        
+
         if "pk" not in payload:
             return HttpResponseBadRequest("Missing pk of resource")
-        
+
         # check user permissions before forwarding request
         resource = ResourceBase.objects.get(pk=payload["pk"]).get_self_resource()
         if not request.user.has_perm("base.view_resourcebase", resource):
             return HttpResponseForbidden()
         # remove pk before forwarding request
         payload.pop("pk")
-        
+
+        data = json.dumps(payload)
+        headers = {"Content-Type": "application/json"}
+
         api_url = getattr(settings, LITTERASSESSMENT_MODEL_API)
-        response, content = http_client.post(api_url, data=payload)
+        response, content = http_client.post(api_url, headers=headers, data=data)
         if not response:
             logger.warn("No connection to AI service API!", content)
             return HttpResponseServerError("Could not connect to backend service!")
-        
+
         if response.status_code == 200:
             return JsonResponse(content)
         else:
@@ -55,4 +57,3 @@ def forward_request(request):
             return HttpResponseServerError("Error processing request.")
     else:
         return HttpResponseNotAllowed()
-    

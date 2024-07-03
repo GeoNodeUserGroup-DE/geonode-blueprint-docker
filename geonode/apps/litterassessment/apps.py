@@ -12,7 +12,8 @@ def run_setup_hooks(*args, **kwargs):
     setattr(
         settings,
         LITTERASSESSMENT_MODEL_API,
-        "http://localhost:9000/v2/models/predict/",
+        "http://litterassessment:9000/v2/models/predict/",
+        # "http://172.18.0.1:9000/v2/models/predict/",
     )
 
     urlpatterns += [
