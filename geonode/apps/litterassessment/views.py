@@ -47,8 +47,7 @@ def forward_request(request):
         api_url = getattr(settings, LITTERASSESSMENT_MODEL_API)
         response, content = http_client.post(api_url, headers=headers, data=data)
         if not response:
-            logger.warn(f"No connection to AI service API! -> 
-                        {api_url} [headers={headers}][data={data}]")
+            logger.warn(f"No connection to AI service API! -> {api_url} [headers={headers}][data={data}]")
             return HttpResponseServerError("Could not connect to backend service!")
 
         if response.status_code == 200:
