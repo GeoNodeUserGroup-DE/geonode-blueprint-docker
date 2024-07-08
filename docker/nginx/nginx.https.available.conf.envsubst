@@ -8,6 +8,7 @@ ssl_session_timeout 5m;
 # this is the actual HTTPS host
 server {
     allow               10.249.0.0/16;
+    allow               131.173.0.0/16;
     allow               80.156.182.234;
     deny                all;
 
