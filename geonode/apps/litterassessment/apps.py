@@ -1,3 +1,4 @@
+
 from django.apps import apps, AppConfig as BaseAppConfig
 from django.urls import include, re_path
 
@@ -9,12 +10,12 @@ def run_setup_hooks(*args, **kwargs):
     from django.conf import settings
     from geonode.urls import urlpatterns
 
-    setattr(
-        settings,
-        LITTERASSESSMENT_MODEL_API,
-        "http://litterassessment:9000/v2/models/predict/",
-        # "http://172.18.0.1:9000/v2/models/predict/",
-    )
+    if not settings.LITTERASSESSMENT_MODEL_API:
+        setattr(
+            settings,
+            LITTERASSESSMENT_MODEL_API,
+            "http://litterassessment:9000/v2/models/predict/",
+        )
 
     urlpatterns += [
         re_path(r"^litterassessment/", include("litterassessment.urls"))

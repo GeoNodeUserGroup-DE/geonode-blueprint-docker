@@ -23,7 +23,7 @@
           },
           "output_type": {
             "type": "string",
-            "default": "Download",
+            "default": "Response",
             "enum": ["Download", "Response"]
           }
         }
@@ -36,7 +36,7 @@
           "ui:widget": "select"
         },
         "output_type": {
-          "ui:enumDisable": ["Response"]
+          "ui:widget": "hidden"
         },
         "generate_plot": {
           "ui:widget": "radio"
