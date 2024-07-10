@@ -124,7 +124,7 @@ LOGGING = {
     },
 }
 
-LITTERASSESSMENT_MODEL_API = "http://172.18.0.1:9000/v2/models/predict/"
+LITTERASSESSMENT_MODEL_API = os.getenv("LITTERASSESSMENT_MODEL_API", "http://172.18.0.1:9000/v2/models/predict/")
 
 INSTALLED_APPS += (
     "litterassessment",
