@@ -11,8 +11,8 @@
           },
           "model": {
             "type": "string",
-            "default": "PLD",
-            "enum": ["PLD", "PanOptic_Segmentation"]
+            "default": "PLD_festival",
+            "enum": ["PLD_festival","Instance_Segmentation","VISAI","PanOptic_Segmentation","PLD"]
           },
           "generate_plot": {
             "in": "query",
@@ -42,43 +42,7 @@
           "ui:widget": "radio"
         }
       }
-    },
-    "old-litterassessment": {
-      "jsonSchema": {
-        "title": "Input Data 2",
-        "type": "object",
-        "required": [],
-        "properties": {
-          "input": {
-            "type": "string"
-          },
-          "PLD": {
-            "in": "query",
-            "type": "boolean",
-            "title": "PLD plot",
-            "description": "Whether a detection plot should be provided.",
-            "default": true
-          },
-          "PLQ": {
-            "in": "query",
-            "type": "boolean",
-            "title": "PLD plot",
-            "description": "Whether a quantification plot should be provided.",
-            "default": true
-          }
-        }
-      },
-      "uiSchema": {
-        "input": {
-          "ui:widget": "hidden"
-        },
-        "PLD": {
-          "ui:widget": "select"
-        },
-        "PLQ": {
-          "ui:widget": "select"
-        }
-      }
     }
+    
   }
 }
