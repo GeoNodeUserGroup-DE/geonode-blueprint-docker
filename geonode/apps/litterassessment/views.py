@@ -51,7 +51,7 @@ def forward_request(request):
             return HttpResponseServerError("Could not connect to backend service!")
 
         if response.status_code == 200:
-            return JsonResponse(content, safe=False)
+            return JsonResponse(response.json(), safe=False)
         else:
             logger.warn(f"Could not process request! -> {content}")
             return HttpResponseServerError("Error processing request.")
