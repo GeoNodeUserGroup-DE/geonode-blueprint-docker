@@ -48,7 +48,7 @@ cd geonode
 >
 > Settings (e.g. geodatabase parameters) are mainly configured in the `.env` file. 
 > To review in-built default settings of an image, run the `env` command on an image.
-> For example `docker run 52north/geonode-geoserver env | sort`.
+> For example `docker run geonode/geoserver env | sort`.
 >
 > For a complete set of available options take the [GeoNode Settings](https://docs.geonode.org/en/master/basic/settings/index.html#settings) documentation as a reference.
 
