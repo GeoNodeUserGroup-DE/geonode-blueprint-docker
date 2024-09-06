@@ -7,6 +7,7 @@
 import os
 import ast
 import sys
+import ast
 
 
 # sets defaults settings and from .env
@@ -22,20 +23,23 @@ SITE_HOST_NAME = "PlasticObs+"
 X_FRAME_OPTIONS = "SAMEORIGIN"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None if DEBUG else "same-origin"
 
-
 # relax origins for geonode-mapstore-client development
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost",
-] if DEBUG else ast.literal_eval(os.getenv("CSRF_TRUSTED_ORIGINS", "[]")) # noqa
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost",
-] if DEBUG else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGINS", "[]"))  # noqa
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    # match localhost with any port
-    r'^http:\/\/localhost:*([0-9]+)?$',
-    r'^https:\/\/localhost:*([0-9]+)?$',
-] if DEBUG else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGIN_REGEXES", "[]"))  # noqa
-
+CSRF_TRUSTED_ORIGINS = (
+    ["http://172.18.0.1:8001", "http://localhost:8081"]
+    if DEBUG
+    else ast.literal_eval(os.getenv("CSRF_TRUSTED_ORIGINS", "[]"))
+)
+CORS_ALLOWED_ORIGINS = (
+    ["http://172.18.0.1:8001", "http://localhost:8081"]
+    if DEBUG
+    else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGINS", "[]"))
+)
+CORS_ALLOWED_ORIGIN_REGEXES = (
+    # match localhost on any port
+    [r'^http:\/\/localhost:*([0-9]+)?$',r'^https:\/\/localhost:*([0-9]+)?$',]
+    if DEBUG
+    else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGIN_REGEXES", "[]"))  # noqa
+)
 
 STATIC_ROOT = "/mnt/volumes/statics/static/"
 MEDIA_ROOT = "/mnt/volumes/statics/uploaded/"
@@ -124,7 +128,9 @@ LOGGING = {
     },
 }
 
-LITTERASSESSMENT_MODEL_API = os.getenv("LITTERASSESSMENT_MODEL_API", "http://172.18.0.1:9000/v2/models/predict/")
+LITTERASSESSMENT_MODEL_API = os.getenv(
+    "LITTERASSESSMENT_MODEL_API", "http://172.18.0.1:5000"
+)
 
 INSTALLED_APPS += (
     "litterassessment",
