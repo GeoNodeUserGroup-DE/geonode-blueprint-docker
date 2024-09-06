@@ -44,8 +44,6 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=geonode.settings_override
       - IS_CELERY=False
-    networks:
-      - geonode_network
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "uwsgi --ini /usr/src/geonode/uwsgi.ini"
 
@@ -58,8 +56,6 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=geonode.settings_override
       - IS_CELERY=True
-    networks:
-      - geonode_network
     entrypoint: ["/usr/src/geonode/entrypoint.sh"]
     command: "celery-cmd"
 
@@ -87,9 +83,6 @@ services:
       #- <path-to-cert>.pem:/geonode-certificates/autoissued/fullchain.pem
       #- <path-to-key>.pem:/geonode-certificates/autoissued/privkey.pem
     restart: on-failure
-    networks:
-      geonode_network:
-        ipv4_address: 172.18.0.100
 
   # Geoserver backend
   geoserver:
@@ -118,8 +111,6 @@ services:
         condition: service_healthy
       data-dir-conf:
         condition: service_healthy
-    networks:
-      - geonode_network
 
   data-dir-conf:
     build:
@@ -134,8 +125,6 @@ services:
     restart: unless-stopped
     healthcheck:
       test: "ls -A '/geoserver_data/data' | wc -l"
-    networks:
-      - geonode_network
 
   # PostGIS database.
   db:
@@ -153,8 +142,6 @@ services:
     restart: unless-stopped
     healthcheck:
       test: "pg_isready -d postgres -U postgres"
-    networks:
-      - geonode_network
 
   # Vanilla RabbitMQ service. This is needed by celery
   rabbitmq:
@@ -163,8 +150,6 @@ services:
     volumes:
       - rabbitmq:/var/lib/rabbitmq
     restart: unless-stopped
-    networks:
-      - geonode_network
 
 volumes:
   statics:
@@ -183,10 +168,3 @@ volumes:
     name: ${COMPOSE_PROJECT_NAME}-tmp
   rabbitmq:
     name: ${COMPOSE_PROJECT_NAME}-rabbitmq
-
-networks:
-  geonode_network:
-    name: geonode_network
-    ipam:
-      config:
-        - subnet: "172.18.0.0/16"

@@ -23,11 +23,13 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = None if DEBUG else "same-origin"
 
 # relax origins for geonode-mapstore-client development
 CSRF_TRUSTED_ORIGINS = [
-    "http://172.18.0.1:8001",
+    "http://localhost",
+    "http://localhost:8001",
     "http://localhost:8081"
 ] if DEBUG else ast.literal_eval(os.getenv("CSRF_TRUSTED_ORIGINS", "[]")) # noqa
 CORS_ALLOWED_ORIGINS = [
-    "http://172.18.0.1:8001",
+    "http://localhost",
+    "http://localhost:8001",
     "http://localhost:8081"
 ] if DEBUG else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGINS", "[]"))  # noqa
 
