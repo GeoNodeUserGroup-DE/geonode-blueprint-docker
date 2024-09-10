@@ -3,6 +3,7 @@ import logging
 
 from django.conf import settings
 from django.http import (
+    HttpResponse,
     HttpResponseBadRequest,
     HttpResponseNotAllowed,
     HttpResponseForbidden,
@@ -22,9 +23,37 @@ from .apps import LITTERASSESSMENT_MODEL_API
 logger = logging.getLogger(__name__)
 
 
+def _forward(method, url, headers={}, data=None):
+    response, content = http_client.request(
+        url, method, data=data, headers=headers, verify=False
+    )
+    if not response:
+        logger.warning(
+            f"""Error on connecting backend service! -> {url}
+            [headers={headers}]
+            [data={data}]"""
+        )
+        response = HttpResponse(response.content)
+        response.status_code = response.status_code
+        return response
+        # return response
+
+    if response.status_code == 200:
+        return response
+    else:
+        logger.warning(f"Could not process request! -> {content}")
+        return HttpResponseServerError("Error processing request.")
+
+
 @login_required
-def forward_request(request):
-    if request.method == "POST":
+def forward_request(request, path):
+    api_url = getattr(settings, LITTERASSESSMENT_MODEL_API)
+    url = url = f"{api_url}/{path}"
+    if request.method == "GET":
+        headers = {"Accept": "application/json"}
+        response = _forward("GET", url=url, headers=headers)
+        return JsonResponse(response.json())
+    elif request.method == "POST":
         try:
             payload = json.loads(request.body.decode("utf-8"))
         except Exception as e:
@@ -41,19 +70,10 @@ def forward_request(request):
         # remove pk before forwarding request
         payload.pop("pk")
 
+        headers = {"Content-Type": "application/json", "Accept": "application/json"}
         data = json.dumps(payload)
-        headers = {"Content-Type": "application/json"}
+        response = _forward("POST", url=url, headers=headers, data=data)
+        return JsonResponse(response.json())
 
-        api_url = getattr(settings, LITTERASSESSMENT_MODEL_API)
-        response, content = http_client.post(api_url, headers=headers, data=data)
-        if not response:
-            logger.warn(f"No connection to AI service API! -> {api_url} [headers={headers}][data={data}]")
-            return HttpResponseServerError("Could not connect to backend service!")
-
-        if response.status_code == 200:
-            return JsonResponse(response.json(), safe=False)
-        else:
-            logger.warn(f"Could not process request! -> {content}")
-            return HttpResponseServerError("Error processing request.")
     else:
         return HttpResponseNotAllowed()

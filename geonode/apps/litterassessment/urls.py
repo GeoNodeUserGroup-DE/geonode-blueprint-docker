@@ -3,5 +3,5 @@ from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    re_path(r"^$", views.forward_request)
+    re_path(r"^(?P<path>.*)/$", views.forward_request)
 ]
