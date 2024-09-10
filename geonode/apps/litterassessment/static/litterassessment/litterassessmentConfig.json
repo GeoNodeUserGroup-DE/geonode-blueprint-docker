@@ -1,48 +1,42 @@
 {
-  "models": {
-    "litterassessment": {
-      "jsonSchema": {
-        "title": "Input Data",
-        "type": "object",
-        "required": [],
-        "properties": {
-          "imageUrl": {
-            "type": "string"
-          },
-          "model": {
-            "type": "string",
-            "default": "PLD_festival",
-            "enum": ["PLD_festival","Instance_Segmentation","VISAI","PanOptic_Segmentation","PLD"]
-          },
-          "generate_plot": {
-            "in": "query",
-            "type": "boolean",
-            "title": "Generate plot",
-            "description": "Whether the plot should be provided.",
-            "default": true
-          },
-          "output_type": {
-            "type": "string",
-            "default": "Response",
-            "enum": ["Download", "Response"]
-          }
-        }
+  "schemas": {
+    "densenet_121": {
+      "imageUrl": {
+        "ui:widget": "hidden"
       },
-      "uiSchema": {
-        "imageUrl": {
-          "ui:widget": "hidden"
-        },
-        "model": {
-          "ui:widget": "select"
-        },
-        "output_type": {
-          "ui:widget": "hidden"
-        },
-        "generate_plot": {
-          "ui:widget": "radio"
-        }
+      "output_type": {
+        "ui:widget": "hidden"
+      },
+      "generate_plot": {
+        "ui:widget": "radio"
+      }
+    },
+    "maskrcnn_resnet50": {
+      "imageUrl": {
+        "ui:widget": "hidden"
+      },
+      "output_type": {
+        "ui:widget": "hidden"
+      },
+      "generate_plot": {
+        "ui:widget": "radio"
+      }
+    },
+    "festival_pld": {
+      "imageUrl": {
+        "ui:widget": "hidden"
+      },
+      "output_type": {
+        "ui:widget": "hidden"
+      },
+      "generate_plot": {
+        "ui:widget": "radio"
+      }
+    },
+    "vis_ai": {
+      "imageUrl": {
+        "ui:widget": "hidden"
       }
     }
-    
   }
 }
