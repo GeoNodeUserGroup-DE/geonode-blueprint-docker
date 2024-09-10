@@ -33,6 +33,8 @@ x-common-django:
       condition: service_healthy
     data-dir-conf:
       condition: service_healthy
+  networks:
+    - geonode_network
 
 services:
 
@@ -90,6 +92,9 @@ services:
       #- <path-to-cert>.pem:/geonode-certificates/autoissued/fullchain.pem
       #- <path-to-key>.pem:/geonode-certificates/autoissued/privkey.pem
     restart: always
+    networks:
+      geonode_network:
+        ipv4_address: 172.18.0.100
 
   # Geoserver backend
   geoserver:
@@ -118,6 +123,8 @@ services:
         condition: service_healthy
       data-dir-conf:
         condition: service_healthy
+    networks:
+      - geonode_network
 
   data-dir-conf:
     build:
@@ -132,6 +139,8 @@ services:
     restart: unless-stopped
     healthcheck:
       test: "ls -A '/geoserver_data/data' | wc -l"
+    networks:
+      - geonode_network
 
   # PostGIS database.
   db:
@@ -149,6 +158,8 @@ services:
     restart: unless-stopped
     healthcheck:
       test: "pg_isready -d postgres -U postgres"
+    networks:
+      - geonode_network
 
   # Vanilla RabbitMQ service. This is needed by celery
   rabbitmq:
