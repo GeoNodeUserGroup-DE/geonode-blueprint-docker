@@ -53,9 +53,6 @@ services:
     image: marcopas/docker-mailslurper:latest
     volumes:
       - ./.devcontainer/docker/mail/custom-config.json:/opt/mailslurper/config.json
-      - ./.devcontainer/docker/mail/mailslurper-cert.pem:/opt/mailslurper/mailslurper-cert.pem
-      - ./.devcontainer/docker/mail/mailslurper-key.pem:/opt/mailslurper/mailslurper-key.pem
-      - ./.devcontainer/docker/mail/mailslurper.csr:/opt/mailslurper/mailslurper.csr
     ports:
       - "8008:8080"
       - "8085:8085"
