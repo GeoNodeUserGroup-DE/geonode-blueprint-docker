@@ -10,7 +10,10 @@ from django.http import (
     HttpResponseServerError,
     JsonResponse,
 )
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import (
+    login_required, 
+    permission_required,
+)
 
 from geonode.base.models import ResourceBase
 from geonode.utils import (
@@ -33,6 +36,8 @@ def _forward(method, url, headers={}, data=None):
             [headers={headers}]
             [data={data}]"""
         )
+        if response == None:
+            logger.error("Empty response received!")
         response = HttpResponse(response.content)
         response.status_code = response.status_code
         return response
@@ -46,6 +51,7 @@ def _forward(method, url, headers={}, data=None):
 
 
 @login_required
+@permission_required("litterassessment.can_trigger_inference", raise_exception=True)
 def forward_request(request, path):
     api_url = getattr(settings, LITTERASSESSMENT_MODEL_API)
     url = url = f"{api_url}/{path}"
