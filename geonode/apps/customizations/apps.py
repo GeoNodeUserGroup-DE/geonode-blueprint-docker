@@ -6,16 +6,11 @@ def run_setup_hooks(*args, **kwargs):
     from django.conf import settings
     from django.urls import re_path
     from django.views.generic import TemplateView
-    from django.contrib.sites.models import Site
     from geonode.urls import urlpatterns
 
     LOCAL_ROOT = os.path.abspath(os.path.dirname(__file__))
     template_dir = os.path.join(LOCAL_ROOT, "templates")
     settings.TEMPLATES[0]["DIRS"].insert(0, template_dir)
-
-    current_site = Site.objects.get_current()
-    current_site.domain = os.getenv("SITE_HOST_NAME", "localhost")
-    current_site.save()
 
     urlpatterns += [
         re_path(r'^legal_notice/$',
