@@ -78,6 +78,28 @@ Uncomment the corresponding lines:
  ```
 
 
+### Volume Configuration
+
+By default compose creates [named volumes](https://docs.docker.com/reference/compose-file/volumes/) on its first start (or in case you stopped using the `-v` flag).
+The default volume [configuration is included](https://docs.docker.com/compose/how-tos/multiple-compose-files/include/) from `./compose-volumes_default.yml`.
+Configure a different volume setup in a dedicated file, e.g. `./compose-volumes_myconfig.yml`, for example a custom path for each named volume:
+
+```yml
+geoserver-data-dir:
+  name: ${COMPOSE_PROJECT_NAME}-gsdatadir
+  driver_opts:
+    device: /mnt/geonode-volume/geoserver_data
+    type: none
+    o: bind
+```
+
+You have to put all volume definitions in `/compose-volumes_myconfig.yml`.
+Define `VOLUME=myconfig` as an environment variable and verify your setup via `docker compose config | less`. 
+
+If everything looks good start up the services.
+
+
+
 ## Start and Run
 
 ### Docker-Compose Basics

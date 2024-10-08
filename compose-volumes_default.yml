@@ -1,0 +1,17 @@
+volumes:
+  statics:
+    name: ${COMPOSE_PROJECT_NAME}-statics
+  geoserver-data-dir:
+    name: ${COMPOSE_PROJECT_NAME}-gsdatadir
+  dbdata:
+    name: ${COMPOSE_PROJECT_NAME}-dbdata
+  dbbackups:
+    name: ${COMPOSE_PROJECT_NAME}-dbbackups
+  backup-restore:
+    name: ${COMPOSE_PROJECT_NAME}-backup-restore
+  data:
+    name: ${COMPOSE_PROJECT_NAME}-data
+  tmp:
+    name: ${COMPOSE_PROJECT_NAME}-tmp
+  rabbitmq:
+    name: ${COMPOSE_PROJECT_NAME}-rabbitmq

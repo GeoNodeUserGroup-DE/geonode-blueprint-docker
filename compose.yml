@@ -1,3 +1,6 @@
+include:
+  - ./compose-volumes_${VOLUMES:-default}.yml
+
 # Common Django template for GeoNode and Celery services below
 x-common-django:
   &default-common-django
@@ -150,21 +153,3 @@ services:
     volumes:
       - rabbitmq:/var/lib/rabbitmq
     restart: unless-stopped
-
-volumes:
-  statics:
-    name: ${COMPOSE_PROJECT_NAME}-statics
-  geoserver-data-dir:
-    name: ${COMPOSE_PROJECT_NAME}-gsdatadir
-  dbdata:
-    name: ${COMPOSE_PROJECT_NAME}-dbdata
-  dbbackups:
-    name: ${COMPOSE_PROJECT_NAME}-dbbackups
-  backup-restore:
-    name: ${COMPOSE_PROJECT_NAME}-backup-restore
-  data:
-    name: ${COMPOSE_PROJECT_NAME}-data
-  tmp:
-    name: ${COMPOSE_PROJECT_NAME}-tmp
-  rabbitmq:
-    name: ${COMPOSE_PROJECT_NAME}-rabbitmq
