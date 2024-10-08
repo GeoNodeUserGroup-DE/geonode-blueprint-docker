@@ -94,7 +94,12 @@ geoserver-data-dir:
 ```
 
 You have to put all volume definitions in `/compose-volumes_myconfig.yml`.
-Define `VOLUME=myconfig` as an environment variable and verify your setup via `docker compose config | less`. 
+Define `VOLUME=myconfig` as an environment variable and verify your setup via `docker compose config | less`.
+
+> :bulb: **Hint:**
+>
+> Bind volumes are not created by Docker during startup.
+> Make sure all directories exist or Docker will fail to mount.
 
 If everything looks good start up the services.
 
