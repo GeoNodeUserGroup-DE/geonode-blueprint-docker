@@ -1,5 +1,9 @@
 # Changelog
 
+## Next
+
+- Added Permission `litterassessment.can_trigger_inference` to trigger AI assessments
+
 ## v0.1.0
 
 - Initial version
