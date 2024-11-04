@@ -36,6 +36,7 @@ CORS_ALLOWED_ORIGINS = [
 
 STATIC_ROOT = "/mnt/volumes/statics/static/"
 MEDIA_ROOT = "/mnt/volumes/statics/uploaded/"
+ASSETS_ROOT = "/mnt/volumes/statics/assets/"
 
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
