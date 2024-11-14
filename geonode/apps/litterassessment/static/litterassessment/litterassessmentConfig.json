@@ -4,6 +4,9 @@
       "imageUrl": {
         "ui:widget": "hidden"
       },
+      "pk": {
+        "ui:widget": "hidden"
+      },
       "output_type": {
         "ui:widget": "hidden"
       },
@@ -13,6 +16,9 @@
     },
     "maskrcnn_resnet50": {
       "imageUrl": {
+        "ui:widget": "hidden"
+      },
+      "pk": {
         "ui:widget": "hidden"
       },
       "output_type": {
@@ -26,6 +32,9 @@
       "imageUrl": {
         "ui:widget": "hidden"
       },
+      "pk": {
+        "ui:widget": "hidden"
+      },
       "output_type": {
         "ui:widget": "hidden"
       },
@@ -35,6 +44,9 @@
     },
     "vis_ai": {
       "imageUrl": {
+        "ui:widget": "hidden"
+      },
+      "pk": {
         "ui:widget": "hidden"
       }
     }

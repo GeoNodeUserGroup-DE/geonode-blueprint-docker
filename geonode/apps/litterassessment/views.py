@@ -73,8 +73,6 @@ def forward_request(request, path):
         resource = ResourceBase.objects.get(pk=payload["pk"]).get_self_resource()
         if not request.user.has_perm("base.view_resourcebase", resource):
             return HttpResponseForbidden()
-        # remove pk before forwarding request
-        payload.pop("pk")
 
         headers = {"Content-Type": "application/json", "Accept": "application/json"}
         data = json.dumps(payload)
