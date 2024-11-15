@@ -57,3 +57,5 @@ services:
       - "8008:8080"
       - "8085:8085"
     command: "./mailslurper -loglevel debug -logformat simple"
+    networks:
+      - geonode_network

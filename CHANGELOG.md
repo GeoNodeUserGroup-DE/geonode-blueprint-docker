@@ -2,7 +2,8 @@
 
 ## Next
 
-- Added Permission `litterassessment.can_trigger_inference` to trigger AI assessments
+- Upgrade to GeoNode v4.1.1
+- Auto-create `ai-inference` group with permission  `litterassessment.can_trigger_inference` to trigger AI assessments
 
 ## v0.1.0
 

@@ -16,7 +16,7 @@ def run_setup_hooks(*args, **kwargs):
             LITTERASSESSMENT_MODEL_API,
             "http://litterassessment:9000/v2/models/predict/",
         )
-
+        
     urlpatterns += [
         re_path(r"^litterassessment/", include("litterassessment.urls"))
     ]

@@ -85,7 +85,7 @@ services:
       - LETSENCRYPT_MODE=disabled
       - RESOLVER=127.0.0.11
     ports:
-     - "8001:443"
+     - "443:443"
     volumes:
       - statics:/mnt/volumes/statics
       # Link to a custom certificate here
@@ -168,3 +168,12 @@ services:
     volumes:
       - rabbitmq:/var/lib/rabbitmq
     restart: unless-stopped
+    networks:
+      - geonode_network
+
+networks:
+  geonode_network:
+    name: geonode_network
+    ipam:
+      config:
+        - subnet: "172.18.0.0/16"
