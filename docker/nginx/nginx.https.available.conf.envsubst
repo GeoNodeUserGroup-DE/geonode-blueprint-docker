@@ -10,7 +10,7 @@ server {
     #allow               10.249.0.0/16;
     #allow               131.173.0.0/16;
     #allow               80.156.182.234;
-    deny                all;
+    #deny                all;
 
     listen              443 ssl;
     server_name         $HTTPS_HOST;
