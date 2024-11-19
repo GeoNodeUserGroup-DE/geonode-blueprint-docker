@@ -9,6 +9,7 @@ LITTERASSESSMENT_MODEL_API = "LITTERASSESSMENT_MODEL_API"
 def run_setup_hooks(*args, **kwargs):
     from django.conf import settings
     from geonode.urls import urlpatterns
+    from litterassessment.models import PermissionsModel
 
     if not settings.LITTERASSESSMENT_MODEL_API:
         setattr(
@@ -16,7 +17,7 @@ def run_setup_hooks(*args, **kwargs):
             LITTERASSESSMENT_MODEL_API,
             "http://litterassessment:9000/v2/models/predict/",
         )
-        
+
     urlpatterns += [
         re_path(r"^litterassessment/", include("litterassessment.urls"))
     ]
@@ -24,6 +25,7 @@ def run_setup_hooks(*args, **kwargs):
 
 class LitterAssessmentConfig(BaseAppConfig):
     name = "litterassessment"
+    label = "litterassessment"
 
     def ready(self):
         super(LitterAssessmentConfig, self).ready()

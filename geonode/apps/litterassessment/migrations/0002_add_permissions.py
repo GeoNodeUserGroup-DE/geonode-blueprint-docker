@@ -1,6 +1,6 @@
 import logging
 from django.db import migrations
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.management import create_permissions
 from django.contrib.auth.models import Permission
 
 from geonode.groups.models import GroupProfile
@@ -14,14 +14,15 @@ def add_permissions(apps, schema_editor):
         title="ai-inference",
         access="private"
     )
+    
+    # Migrations run in transactions. Permissions have to be created on 1st run
+    app_config = apps.get_app_config("litterassessment")
+    app_config.models_module = True
+    create_permissions(app_config, verbosity=0)
+    app_config.models_module = None
     for permission in PermissionsModel._meta.permissions:
         if create:
-            ctype = ContentType.objects.get_for_model(group_profile)
-            perm, _ = Permission.objects.get_or_create(
-                codename=permission[0],
-                name=permission[1],
-                content_type=ctype,
-            )
+            perm = Permission.objects.get(codename=permission[0])
             group_profile.group.permissions.add(perm)
         group_profile.save()
 
@@ -30,7 +31,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ("auth", "__latest__"),
         ("groups", "__latest__"),
-        ("contenttypes", "__latest__"),
+        # ("contenttypes", "__latest__"),
         ("litterassessment", "0001_initial"),
     ]
 

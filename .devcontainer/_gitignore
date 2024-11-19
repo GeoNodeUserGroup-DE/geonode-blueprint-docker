@@ -102,6 +102,7 @@ scripts/spcgeonode/_volume_*
 
 # Mounted contrib apps
 externalapplications/
+litterassessment/
 customizations/
 
 # Mounted config
