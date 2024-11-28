@@ -3,6 +3,7 @@
 ## Next
 
 - tbd
+- Fix favicon volume overlay
 
 ## v0.2.0
 
