@@ -23,6 +23,7 @@ services:
       - .devcontainer/.env.local
     environment:
       - HTTPS_HOST=
+      - HTTP_HOST=${SITE_HOST_NAME}
     ports:
       - "80:80"
 
