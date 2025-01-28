@@ -10,7 +10,6 @@ from django.http import (
     HttpResponseServerError,
     JsonResponse,
 )
-from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import (
     login_required, 
     permission_required,
@@ -21,6 +20,12 @@ from geonode.utils import (
     http_client,
 )
 
+from rest_framework.views import APIView
+from rest_framework import authentication
+from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound, APIException
+from oauth2_provider.contrib import rest_framework
+
+from litterassessment.permissions import CanTriggerInferencePermissions
 from litterassessment.apps import LITTERASSESSMENT_MODEL_API
 
 logger = logging.getLogger(__name__)
@@ -36,46 +41,58 @@ def _forward(method, path, headers={}, data=None):
     response, content = http_client.request(
         url, method, data=data, headers=headers, verify=False
     )
+    status_code = response.status_code
     if not response:
-        logger.warning(
-            f"""Error on connecting backend service! -> {url}
-            [headers={headers}]
-            [data={data}]"""
-        )
-        if response == None:
-            logger.error("Empty response received!")
-        response = HttpResponse(response.content)
-        response.status_code = response.status_code
-        return response
+        if status_code == 400:
+            raise ValidationError(response.content)
+        elif status_code == 404:
+            raise NotFound(response.content)
+        else:
+            raise APIException(response.content)
 
-    if response.status_code == 200:
+    if status_code >= 200 and status_code < 400:
         return response
     else:
         logger.warning(f"Could not process request! -> {content}")
         return HttpResponseServerError("Error processing request.")
 
-@login_required
-@permission_required("litterassessment.can_trigger_inference", raise_exception=True)
-def openapi(request):
-    if request.method == "GET":
-        headers = {"Accept": "application/json"}
-        response = _forward("GET", "openapi.json", headers=headers)
-        return JsonResponse(response.json())
+class ForwardToInferenceApi(APIView):
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        authentication.BasicAuthentication,
+        rest_framework.OAuth2Authentication,
+    ]
+    permission_classes = [
+        CanTriggerInferencePermissions
+    ]
+    
+    def get(self, request, path, format=None):
+        if request.method == "GET":
+            headers = {"Accept": "application/json"}
+            response = _forward("GET", path, headers=headers)
+            return JsonResponse(response.json())
 
-@login_required
-@permission_required("litterassessment.can_trigger_inference", raise_exception=True)
-def forward_request(request, path):
-    if request.method == "POST":
-        try:
-            payload = json.loads(request.body.decode("utf-8"))
-        except Exception as e:
-            logger.debug("Invalid JSON payload!", e)
-            return HttpResponseBadRequest()
+    def post(self, request, path):
+        if isinstance(request.data, dict):
+            payload = request.data
+        else:
+            try:
+                payload = json.loads(request.data)
+            except Exception as e:
+                logger.debug("Invalid JSON payload!", e)
+                raise ValidationError("Invalid JSON payload!")
 
         if "pk" not in payload:
-            return HttpResponseBadRequest("Missing pk of resource")
+            raise ValidationError("Missing pk of resource")
 
         # check user permissions before forwarding request
+        pk = payload["pk"]
+        try:
+            resource = ResourceBase.objects.get(pk=pk).get_self_resource()
+            if not request.user.has_perm("base.view_resourcebase", resource):
+                raise PermissionDenied("Invalid permissions to access resource!")
+        except ResourceBase.DoesNotExist:
+            raise ValidationError(f"Resource with id '{pk}' does not exist!")
         resource = ResourceBase.objects.get(pk=payload["pk"]).get_self_resource()
         if not request.user.has_perm("base.view_resourcebase", resource):
             return HttpResponseForbidden()
@@ -83,7 +100,4 @@ def forward_request(request, path):
         headers = {"Content-Type": "application/json", "Accept": "application/json"}
         data = json.dumps(payload)
         response = _forward("POST", path, headers=headers, data=data)
-        return JsonResponse(response.json())
-
-    else:
-        return HttpResponseNotAllowed(["POST"])
+        return JsonResponse(job)
