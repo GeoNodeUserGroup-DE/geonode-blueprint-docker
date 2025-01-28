@@ -10,6 +10,7 @@ from django.http import (
     HttpResponseServerError,
     JsonResponse,
 )
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import (
     login_required, 
     permission_required,
@@ -20,13 +21,18 @@ from geonode.utils import (
     http_client,
 )
 
-from .apps import LITTERASSESSMENT_MODEL_API
-
+from litterassessment.apps import LITTERASSESSMENT_MODEL_API
 
 logger = logging.getLogger(__name__)
 
 
-def _forward(method, url, headers={}, data=None):
+def _forward_url(path):
+    api_url = getattr(settings, LITTERASSESSMENT_MODEL_API)
+    return f"{api_url}/{path}"
+
+
+def _forward(method, path, headers={}, data=None):
+    url = _forward_url(path)
     response, content = http_client.request(
         url, method, data=data, headers=headers, verify=False
     )
@@ -41,7 +47,6 @@ def _forward(method, url, headers={}, data=None):
         response = HttpResponse(response.content)
         response.status_code = response.status_code
         return response
-        # return response
 
     if response.status_code == 200:
         return response
@@ -49,17 +54,18 @@ def _forward(method, url, headers={}, data=None):
         logger.warning(f"Could not process request! -> {content}")
         return HttpResponseServerError("Error processing request.")
 
+@login_required
+@permission_required("litterassessment.can_trigger_inference", raise_exception=True)
+def openapi(request):
+    if request.method == "GET":
+        headers = {"Accept": "application/json"}
+        response = _forward("GET", "openapi.json", headers=headers)
+        return JsonResponse(response.json())
 
 @login_required
 @permission_required("litterassessment.can_trigger_inference", raise_exception=True)
 def forward_request(request, path):
-    api_url = getattr(settings, LITTERASSESSMENT_MODEL_API)
-    url = url = f"{api_url}/{path}"
-    if request.method == "GET":
-        headers = {"Accept": "application/json"}
-        response = _forward("GET", url=url, headers=headers)
-        return JsonResponse(response.json())
-    elif request.method == "POST":
+    if request.method == "POST":
         try:
             payload = json.loads(request.body.decode("utf-8"))
         except Exception as e:
@@ -76,8 +82,8 @@ def forward_request(request, path):
 
         headers = {"Content-Type": "application/json", "Accept": "application/json"}
         data = json.dumps(payload)
-        response = _forward("POST", url=url, headers=headers, data=data)
+        response = _forward("POST", path, headers=headers, data=data)
         return JsonResponse(response.json())
 
     else:
-        return HttpResponseNotAllowed()
+        return HttpResponseNotAllowed(["POST"])
