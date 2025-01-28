@@ -3,16 +3,8 @@ import logging
 
 from django.conf import settings
 from django.http import (
-    HttpResponse,
-    HttpResponseBadRequest,
-    HttpResponseNotAllowed,
-    HttpResponseForbidden,
     HttpResponseServerError,
     JsonResponse,
-)
-from django.contrib.auth.decorators import (
-    login_required, 
-    permission_required,
 )
 
 from geonode.base.models import ResourceBase
@@ -25,6 +17,7 @@ from rest_framework import authentication
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound, APIException
 from oauth2_provider.contrib import rest_framework
 
+from litterassessment.models import Inference
 from litterassessment.permissions import CanTriggerInferencePermissions
 from litterassessment.apps import LITTERASSESSMENT_MODEL_API
 
@@ -93,11 +86,26 @@ class ForwardToInferenceApi(APIView):
                 raise PermissionDenied("Invalid permissions to access resource!")
         except ResourceBase.DoesNotExist:
             raise ValidationError(f"Resource with id '{pk}' does not exist!")
-        resource = ResourceBase.objects.get(pk=payload["pk"]).get_self_resource()
-        if not request.user.has_perm("base.view_resourcebase", resource):
-            return HttpResponseForbidden()
+
+        inference = Inference.objects.create(payload=payload, resource=resource)
+        inference.group_id = payload["inferenceGroup"] if "inferenceGroup" in payload else None
+        inference.initiator = request.user
+        inference.save()
 
         headers = {"Content-Type": "application/json", "Accept": "application/json"}
         data = json.dumps(payload)
         response = _forward("POST", path, headers=headers, data=data)
+        job = response.json()
+        
+        if response.status_code == 201:
+            inference.job_url = response.headers["location"]
+            status = job["status"]
+            if status == "running":
+                inference.set_running()
+            else:
+                message = job["msg"]
+                inference.finish(Inference.Status.FAILED)
+                inference.details(f"Job status: {status}, Details: '{message}'")
+            inference.save()
+
         return JsonResponse(job)

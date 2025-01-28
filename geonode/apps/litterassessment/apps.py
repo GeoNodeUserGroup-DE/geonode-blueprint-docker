@@ -19,7 +19,8 @@ def run_setup_hooks(*args, **kwargs):
         )
 
     urlpatterns += [
-        re_path(r"^litterassessment/", include("litterassessment.urls"))
+        re_path(r"^litterassessment/", include("litterassessment.urls")),
+        re_path(r"^inferences/", include("litterassessment.api.urls")),
     ]
 
 

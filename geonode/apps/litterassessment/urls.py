@@ -1,6 +1,5 @@
 from django.urls import re_path
 
-from litterassessment import views
 from litterassessment.views import ForwardToInferenceApi
 
 urlpatterns = [
