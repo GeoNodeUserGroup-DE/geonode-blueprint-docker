@@ -39,6 +39,7 @@ class Inference(models.Model):
         FAILED = "FAILED", _("failed")
         CANCELLED = "CANCELLED", _("cacelled")
         COMPLETE = "COMPLETE", _("complete")
+        DELETED = "DELETED", _("deleted")
 
     started = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -55,12 +56,12 @@ class Inference(models.Model):
         default=Status.PENDING,
     )
 
-    def cancel(self) -> None:
-        if self.status in (self.Status.PENDING, self.Status.RUNNING):
-            self.finish(self.Status.CANCELLED)
-        else:
-            logger.debug(f"AI inference {self} is not currently in an state that can be cancelled, skipping...")
-        self.save()
+    # def cancel(self) -> None:
+    #     if self.status in (self.Status.PENDING, self.Status.RUNNING):
+    #         self.finish(self.Status.CANCELLED)
+    #     else:
+    #         logger.debug(f"AI inference {self} is not currently in an state that can be cancelled, skipping...")
+    #     self.save()
 
     def finish(self, status: Status, details="") -> Status:
         self.status = status

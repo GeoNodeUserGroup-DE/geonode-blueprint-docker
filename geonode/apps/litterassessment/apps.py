@@ -18,6 +18,11 @@ def run_setup_hooks(*args, **kwargs):
             "http://litterassessment:9000/v2/models/predict/",
         )
 
+    settings.CELERY_BEAT_SCHEDULE["inference-tasks"] = {
+        "task": "litterassessment.tasks.poll_inference_status",
+        "schedule": getattr(settings, "LITTERASSESSMENT_SCHEDULER_FREQUENCY_MINUTES", 0.5) * 60,
+    }
+
     urlpatterns += [
         re_path(r"^litterassessment/", include("litterassessment.urls")),
         re_path(r"^inferences/", include("litterassessment.api.urls")),
