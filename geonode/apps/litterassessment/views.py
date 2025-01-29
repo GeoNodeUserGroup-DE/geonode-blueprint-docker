@@ -8,9 +8,7 @@ from django.http import (
 )
 
 from geonode.base.models import ResourceBase
-from geonode.utils import (
-    http_client,
-)
+from geonode.utils import http_client
 
 from rest_framework.views import APIView
 from rest_framework import authentication
