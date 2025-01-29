@@ -1,5 +1,7 @@
 import logging
 
+from django.db.models import Q
+
 from rest_framework import generics, authentication
 from oauth2_provider.contrib import rest_framework
 
@@ -23,6 +25,6 @@ class InferenceList(generics.ListCreateAPIView):
     def filter_queryset(self, queryset):
         user = self.request.user
         group_ids = user.groups.values_list("id", flat=True)
-        return queryset.filter(group_id__in=set(group_ids))
-
-    # TODO Set target group on a triggered inference and filter on group permissions
+        return queryset.filter(
+            Q(group_id__in=set(group_ids)) | Q(group_id__isnull=True)
+        )
