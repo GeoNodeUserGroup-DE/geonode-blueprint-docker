@@ -45,8 +45,7 @@
       "args": [
         "test",
         "--keepdb",
-        "settings=geonode.settings_override",
-        "importer.handlers.shapefile"
+        "--settings=geonode.settings_override",
       ],
       "justMyCode": false,
       "cwd": "${workspaceFolder}",
