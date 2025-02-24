@@ -22,17 +22,29 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = None if DEBUG else "same-origin"
 
 
 # relax origins for geonode-mapstore-client development
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost",
-] if DEBUG else ast.literal_eval(os.getenv("CSRF_TRUSTED_ORIGINS", "[]")) # noqa
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost",
-] if DEBUG else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGINS", "[]"))  # noqa
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    # match localhost with any port
-    r'^http:\/\/localhost:*([0-9]+)?$',
-    r'^https:\/\/localhost:*([0-9]+)?$',
-] if DEBUG else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGIN_REGEXES", "[]"))  # noqa
+CSRF_TRUSTED_ORIGINS = (
+    [
+        "http://localhost",
+    ]
+    if DEBUG
+    else ast.literal_eval(os.getenv("CSRF_TRUSTED_ORIGINS", "[]"))
+)  # noqa
+CORS_ALLOWED_ORIGINS = (
+    [
+        "http://localhost",
+    ]
+    if DEBUG
+    else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGINS", "[]"))
+)  # noqa
+CORS_ALLOWED_ORIGIN_REGEXES = (
+    [
+        # match localhost with any port
+        r"^http:\/\/localhost:*([0-9]+)?$",
+        r"^https:\/\/localhost:*([0-9]+)?$",
+    ]
+    if DEBUG
+    else ast.literal_eval(os.getenv("CORS_ALLOWED_ORIGIN_REGEXES", "[]"))
+)  # noqa
 
 
 STATIC_ROOT = "/mnt/volumes/statics/static/"
