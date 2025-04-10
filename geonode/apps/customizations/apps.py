@@ -13,20 +13,17 @@ def run_setup_hooks(*args, **kwargs):
     settings.TEMPLATES[0]["DIRS"].insert(0, template_dir)
 
     urlpatterns += [
-        re_path(r'^legal_notice/$',
-            TemplateView.as_view(template_name='legal-notice.html'),
-            name='legal-notice'),
-        re_path(r'^accessibility/$',
-            TemplateView.as_view(template_name='accessibility.html'),
-            name='accessibility'),
+        re_path(r"^legal_notice/$", TemplateView.as_view(template_name="legal-notice.html"), name="legal-notice"),
+        re_path(r"^accessibility/$", TemplateView.as_view(template_name="accessibility.html"), name="accessibility"),
     ]
 
 
 class CustomizationsAppConfig(AppConfig):
-    name = 'customizations'
+    name = "customizations"
 
     def ready(self):
         super().ready()
         run_setup_hooks()
 
-default_app_config = 'customizations.CustomizationsAppConfig'
+
+default_app_config = "customizations.CustomizationsAppConfig"
