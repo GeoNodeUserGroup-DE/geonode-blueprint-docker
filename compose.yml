@@ -84,8 +84,8 @@ services:
     volumes:
       - statics:/mnt/volumes/statics
         # files are expected to exist within the context 
-      - ${CERT_PATH_CHAIN:-./cert.pem}:/geonode-certificates/autoissued/fullchain.pem
-      - ${CERT_PATH_KEY:-./key.pem}:/geonode-certificates/autoissued/privkey.pem
+      - ${CERT_PATH_CHAIN:-./docker/nginx/cert.pem}:/geonode-certificates/autoissued/fullchain.pem
+      - ${CERT_PATH_KEY:-./docker/nginx/key.pem}:/geonode-certificates/autoissued/privkey.pem
     restart: on-failure
 
   # Geoserver backend
