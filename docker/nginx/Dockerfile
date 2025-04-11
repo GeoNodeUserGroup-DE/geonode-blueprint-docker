@@ -6,9 +6,6 @@ ARG CERT_PATH_KEY=./key.pem
 ENV STATIC_ROOT=/mnt/volumes/statics/static/
 ENV MEDIA_ROOT=/mnt/volumes/statics/uploaded/
 
-COPY ${CERT_PATH_CHAIN} /geonode-certificates/autoissued/fullchain.pem
-COPY ${CERT_PATH_KEY} /geonode-certificates/autoissued/privkey.pem
-
 # use $http_host variable instead of $host which does not transport the port
 COPY ./geonode.conf.envsubst /etc/nginx/sites-enabled/geonode.conf.envsubst
 # overwrite nginx conf for hardening
