@@ -3,18 +3,16 @@
 {% block content %}
 
 <style>
-    /* 
-   * Custom Theming
-   * https://geonode.org/geonode-mapstore-client/master/tutorial-theme.html 
-   */
-    body {
-     background-color: red;   
+   /* 
+    * Custom Theming
+    * https://geonode.org/geonode-mapstore-client/master/tutorial-theme.html 
+    */
+    {% comment %}
+    :root {
+         /*  PUT CUSTOM STYLES HERE  */
+         --gn-jumbotron-bg: #383839;
     }
-
-   :root {
-        /*  PUT CUSTOM STYLES HERE  */
-        --gn-jumbotron-bg: #383839;
-   }
+    {% endcomment %}
 
 </style>
 
