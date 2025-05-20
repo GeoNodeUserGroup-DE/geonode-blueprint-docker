@@ -16,6 +16,7 @@ x-common-django:
   volumes:
     # configuration
     - ./geonode/geonode/settings_override.py:/usr/src/geonode/geonode/settings_override.py
+    - ./geonode/uploaded/subsites:/mnt/volumes/statics/uploaded/subsites
     - ./geonode/uwsgi.ini:/usr/src/geonode/uwsgi.ini
     - ./geonode/fixtures:/usr/src/geonode/fixtures
     # contrib apps

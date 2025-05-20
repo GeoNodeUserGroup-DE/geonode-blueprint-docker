@@ -138,4 +138,12 @@ LOGGING = {
 INSTALLED_APPS += (
     "externalapplications",
     "customizations",
+    "subsites",
 )
+
+
+# SUBSITE SPECIFIC CONFIGURATION
+ENABLE_SUBSITE_CUSTOM_THEMES = True
+ENABLE_CATALOG_HOME_REDIRECTS_TO = False
+SUBSITE_READ_ONLY = False # return download_resourcebase and view resourcebase as permissions
+SUBSITE_HIDE_EXCLUSIVE_FROM_SPECIFIC_API = True # If TRUE will hide the `subsite_exclusive` resources also from the detailed endpoint `/documents`, `/maps`, `/datasets`, '/geoapps`

@@ -1,0 +1,1 @@
+-e git+https://github.com/geosolutions-it/geonode-subsites@main#egg=geonode-subsites
