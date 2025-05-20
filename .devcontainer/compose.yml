@@ -51,6 +51,7 @@ services:
 
   mail:
     image: marcopas/docker-mailslurper:latest
+    container_name: mail4${COMPOSE_PROJECT_NAME}
     volumes:
       - ./.devcontainer/docker/mail/custom-config.json:/opt/mailslurper/config.json
     ports:
