@@ -124,7 +124,7 @@ These can be applied by overriding `overrideLocalConfig` function within the `ge
 Makes available a subset of resources under a particular URL.
 You are able restrict user permissions and apply individual themes.
 
-Include the `Subsites` app to configure a subsite which displays a filtered set of resources.
+Include the `Subsites` app (`INSTALLED_APPS`) and configure a subsite which displays a filtered set of resources.
 Follow the documentation on the [SUBSITES documentation](./SUBSITES.md).
 
 
