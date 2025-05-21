@@ -1,7 +1,5 @@
 ARG BASE_IMAGE_VERSION
 FROM geonode/nginx:${BASE_IMAGE_VERSION}
-ARG CERT_PATH_CHAIN=./cert.pem
-ARG CERT_PATH_KEY=./key.pem
 
 ENV STATIC_ROOT=/mnt/volumes/statics/static/
 ENV MEDIA_ROOT=/mnt/volumes/statics/uploaded/
