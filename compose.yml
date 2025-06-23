@@ -87,7 +87,7 @@ services:
         # files are expected to exist within the context 
       - ${CERT_PATH_CHAIN:-./docker/nginx/cert.pem}:/geonode-certificates/autoissued/fullchain.pem
       - ${CERT_PATH_KEY:-./docker/nginx/key.pem}:/geonode-certificates/autoissued/privkey.pem
-    restart: on-failure
+    restart: always
 
   # Geoserver backend
   geoserver:
