@@ -29,6 +29,7 @@ geonode/local_settings.py
 
 # Uploaded files
 geonode/uploaded
+geonode/assets_data
 
 #Testing output
 .coverage
@@ -95,6 +96,7 @@ scripts/spcgeonode/_volume_*
 # Docker Hub hooks
 !hooks/*
 
+.env
 
 
 ## Add mounted files and directories
